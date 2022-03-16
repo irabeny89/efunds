@@ -1,0 +1,30 @@
+{
+  "name": "efunds",
+  "version": "1.0.0",
+  "description": "efund allow transfer of funds between users.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsnd --respawn --transpile-only --rs ./src/index.ts",
+    "build": "tsc --outDir ./dist/ --target es2015 --module commonjs ./src/index.ts",
+    "test": "jest --watch"
+  },
+  "keywords": [
+    "funds",
+    "credit",
+    "debit",
+    "transfer",
+    "withdraw"
+  ],
+  "author": "Ernest Irabor",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3",
+    "knex": "^1.0.4",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^15.14.9",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.2"
+  }
+}
