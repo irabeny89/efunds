@@ -119,3 +119,5 @@ server.use((req, res) => {
 server.listen(config.port, () =>
   console.log("Server started on localhost with port", config.port)
 );
+
+export default server
