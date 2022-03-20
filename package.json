@@ -8,12 +8,6 @@
     "build": "tsc --outDir ./dist/ --target es2016 --esModuleInterop true --module commonjs ./src/index.ts",
     "test": "cross-env NODE_ENV=test jest --watch"
   },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
   "keywords": [
     "funds",
     "credit",
