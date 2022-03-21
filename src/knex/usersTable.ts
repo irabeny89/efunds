@@ -1,10 +1,10 @@
 import mysqlOrm from "./index";
 
-(async () => {
+// users table
+const createUsersTable = async (knex: typeof mysqlOrm) => {
   try {
-    // users table
-    (await mysqlOrm.schema.hasTable("users")) ||
-      (await mysqlOrm.schema.createTable("users", (table) => {
+    (await knex.schema.hasTable("users")) ||
+      (await knex.schema.createTable("users", (table) => {
         table.increments();
         table.string("username").notNullable().unique();
         table.float("balance").notNullable().defaultTo(0);
@@ -13,4 +13,6 @@ import mysqlOrm from "./index";
   } catch (error) {
     console.error(error);
   }
-})();
+};
+
+export default createUsersTable;

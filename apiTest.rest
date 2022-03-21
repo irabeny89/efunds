@@ -1,8 +1,38 @@
-POST http://localhost:3000/api/register
-Content-Type: application/json
-
-{"username": "tester1"}
+# root endpoint
+http://localhost:3000
 
 ###
+# get list of accounts
+http://localhost:3000/api/accounts
+Content-Type: application/json
 
-http://localhost:3000
+###
+# create an account
+POST http://localhost:3000/api/accounts/add
+Content-Type: application/json
+
+{ "username": "tester2" }
+
+###
+# fund an account
+PATCH http://localhost:3000/api/accounts/fund
+Content-Type: application/json
+Authorization: Bearer secret
+
+{ "id": 1, "amount": 10000 }
+
+###
+# withdraw from an account
+PATCH http://localhost:3000/api/accounts/withdraw
+Content-Type: application/json
+Authorization: Bearer secret
+
+{ "id": 1, "amount": 3000 }
+
+###
+# transfer funds
+PATCH http://localhost:3000/api/accounts/transfer
+Content-Type: application/json
+Authorization: Bearer secret
+
+{ "amount": 1500, "from": 1, "to": 2 }

@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import mysqlOrm from "../knex";
 import config from "../../config";
+import { User } from "../../types";
 
 export const addAccount: RequestHandler = async (req, res) => {
   try {
@@ -11,7 +12,9 @@ export const addAccount: RequestHandler = async (req, res) => {
           .send("User created. Authentication secret: " + config.secret))
       : res
           .status(400)
-          .send("Username not provided. Also verify authentication secret.");
+          .send(
+            "Username not provided. Also, you may need to verify authentication secret."
+          );
   } catch (error) {
     console.error(error);
     res.status(500).send(config.generalErrorMessage);
@@ -70,16 +73,23 @@ export const transferFund: RequestHandler = async (req, res) => {
       config.secret &&
       req?.body?.amount &&
       req?.body?.from &&
-      req?.body?.to
+      req?.body?.to &&
+      (
+        await mysqlOrm<User>("users")
+          .select("id", "balance")
+          .where("id", req.body.from)
+      )[0].balance! > req.body.amount &&
+      (await mysqlOrm<User>("users").select("id").where("id", req.body.to))
+        .length
       ? (await mysqlOrm.transaction(async (session) => {
           // debit sender
           await session<User>("users")
-            .decrement("balance", req.body.amount < 0 ? 0 : req.body.amount)
-            .where("id", req.body.from);
+            .where("id", req.body.from)
+            .decrement("balance", req.body.amount < 0 ? 0 : req.body.amount);
           // credit receiver
           await session<User>("users")
-            .increment("balance", req.body.amount < 0 ? 0 : req.body.amount)
-            .where("id", req.body.to);
+            .where("id", req.body.to)
+            .increment("balance", req.body.amount < 0 ? 0 : req.body.amount);
         }),
         res
           .status(200)
