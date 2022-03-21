@@ -12,7 +12,7 @@ The API allows:
   
 - fund transfer | `PATCH` | `api/accounts/transfer` | {`amount`: number, `from`: number, `to`: number}
   
-- accounts listing | `GET` | {}
+- accounts listing | `GET` | `api/accounts` | {}
 
 N.B: `PATCH` requests requires secret in the authorization header.
 
@@ -26,6 +26,8 @@ Account IDs are used to identify accounts; just like account numbers, it will be
 
 - install node version 14+
 - install app dependencies - `npm i`
+- create a database named `efunds` with MySQL
+- start the database server/daemon
 - run script - `npm dev`
 - send requests to API endpoints
 
